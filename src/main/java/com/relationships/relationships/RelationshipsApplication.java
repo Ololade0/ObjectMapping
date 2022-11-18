@@ -1,0 +1,19 @@
+package com.relationships.relationships;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+public class RelationshipsApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RelationshipsApplication.class, args);
+    }
+
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
+
+}
