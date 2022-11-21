@@ -35,14 +35,15 @@ class UserDetailsTest {
     }
     @Test
     public void userCanBeCreated() {
+        List<AddressDto> addresses = List.of();
         UserDto userDetailsRequestModel = new UserDto();
-       List<AddressDto> addresses = List.of();
 //        addresses.add(new AddressDto());
         userDetailsRequestModel.setFirstName("Ololade");
         userDetailsRequestModel.setLastName("Oluwatosin");
         userDetailsRequestModel.setEmail("adesuyiololade@gmail.com");
         userDetailsRequestModel.setPassword("12345");
        userDetailsRequestModel.setAddresses(addresses);
+        System.out.println(userService.createUser(userDetailsRequestModel));
         UserDto userDto = userService.createUser(userDetailsRequestModel);
         assertEquals("adesuyiololade@gmail.com", userDto.getEmail());
     }

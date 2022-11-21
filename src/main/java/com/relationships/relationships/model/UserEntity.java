@@ -22,6 +22,8 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String password;
+    private boolean isEnabled;
     @DBRef
     List<AddressEntity> addresses = new ArrayList<>();
+    private Role role;
 }

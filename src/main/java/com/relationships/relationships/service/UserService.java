@@ -7,7 +7,6 @@ import com.relationships.relationships.model.UserEntity;
 import java.util.Optional;
 
 public interface UserService{
-//        extends UserDetailsService {
     UserDto createUser(UserDto userDetailsRequestModel);
 
     UserEntity findByEmail(String email);
