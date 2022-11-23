@@ -1,7 +1,6 @@
 package com.relationships.relationships.security.providers;
 
 import com.relationships.relationships.UserDetailsServices;
-import com.relationships.relationships.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +42,6 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         var appAuthType =
                 UsernamePasswordAuthenticationToken.class;
-
         return authentication.equals(appAuthType);
     }
 }

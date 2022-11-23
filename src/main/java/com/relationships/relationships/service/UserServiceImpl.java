@@ -22,7 +22,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
+//    private final AddressRepository addressRepository;
+    private final AddressService addressService;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -44,8 +45,8 @@ public class UserServiceImpl implements UserService {
             address.setPostalCode(user.getAddresses().get(i).getPostalCode());
             address.setType(user.getAddresses().get(i).getType());
             address.setStreetName(user.getAddresses().get(i).getStreetName());
-
-           AddressEntity addressEntity1 = addressRepository.save(address);
+            AddressEntity addressEntity1 = addressService.save(address);
+//           AddressEntity addressEntity1 = addressRepository.save(address);
             addressEntity.add(addressEntity1);
         }
 

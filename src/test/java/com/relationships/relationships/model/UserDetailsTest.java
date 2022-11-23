@@ -37,7 +37,6 @@ class UserDetailsTest {
     public void userCanBeCreated() {
         List<AddressDto> addresses = List.of();
         UserDto userDetailsRequestModel = new UserDto();
-//        addresses.add(new AddressDto());
         userDetailsRequestModel.setFirstName("Ololade");
         userDetailsRequestModel.setLastName("Oluwatosin");
         userDetailsRequestModel.setEmail("adesuyiololade@gmail.com");

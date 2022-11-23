@@ -26,7 +26,7 @@ public class UserAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(AUTHORIZATION);
-        if (request.getServletPath().equals("/api/v1/user/login")) {
+        if (request.getServletPath().equals("/api/v1/user/login")||request.getServletPath().equals("/api/v1/user/register")) {
             filterChain.doFilter(request, response);
         } else {
             if (authHeader != null && authHeader.startsWith("Bearer ")) {

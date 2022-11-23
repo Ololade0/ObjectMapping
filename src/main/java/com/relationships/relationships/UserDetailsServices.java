@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServices implements UserDetailsService {
     private final UserService userService;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = null;
