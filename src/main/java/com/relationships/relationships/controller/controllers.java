@@ -40,7 +40,6 @@ public class controllers {
     public ResponseEntity<?> findBankById(@PathVariable String id){
         return new ResponseEntity<>(userService.findById(id), HttpStatus.ACCEPTED);
 
-//        }
     }
 
 }

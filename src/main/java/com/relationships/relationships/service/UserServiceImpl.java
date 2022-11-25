@@ -5,7 +5,6 @@ import com.relationships.relationships.dto.UserDto;
 import com.relationships.relationships.model.AddressEntity;
 import com.relationships.relationships.model.Role;
 import com.relationships.relationships.model.UserEntity;
-import com.relationships.relationships.repository.AddressRepository;
 import com.relationships.relationships.repository.UserRepository;
 import com.relationships.relationships.utils.Utils;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-//    private final AddressRepository addressRepository;
     private final AddressService addressService;
     private final PasswordEncoder passwordEncoder;
 
@@ -46,7 +44,6 @@ public class UserServiceImpl implements UserService {
             address.setType(user.getAddresses().get(i).getType());
             address.setStreetName(user.getAddresses().get(i).getStreetName());
             AddressEntity addressEntity1 = addressService.save(address);
-//           AddressEntity addressEntity1 = addressRepository.save(address);
             addressEntity.add(addressEntity1);
         }
 
@@ -65,7 +62,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findByEmail(String email) {
-       return userRepository.findFirstByEmail(email);
+        System.out.println(email);
+        System.out.println(userRepository.findByEmail(email));
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoginResponse login(UserLoginRequestModel userLoginRequestModel) {
-        var user = userRepository.findFirstByEmail(userLoginRequestModel.getEmail());
+        var user = userRepository.findByEmail(userLoginRequestModel.getEmail());
         if(user != null && user.getPassword().equals(userLoginRequestModel.getPassword()));
         return buildSuccessfulLoginResponse(user);
 

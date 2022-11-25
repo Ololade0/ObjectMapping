@@ -21,7 +21,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserDetails userDetails = userDetailsServices.loadUserByUsername((String) authentication.getPrincipal());
+        System.out.println("details--> "+userDetails);
         if (userDetails != null) {
+            System.out.println("here--> "+userDetails);
             if (isPasswordMatch(authentication, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails,

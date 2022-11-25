@@ -1,8 +1,12 @@
 package com.relationships.relationships.security.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.relationships.relationships.model.UserEntity;
 import com.relationships.relationships.security.jwt.JwtUtils;
 import com.relationships.relationships.security.manager.UserAuthenticationManager;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @AllArgsConstructor
+@Slf4j
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final UserAuthenticationManager customAuthenticationManger;
     private final JwtUtils jwtUtils;
@@ -26,13 +31,17 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     public Authentication attemptAuthentication
             (HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        //1. create an authentication obj (which contain auth credentials) that isn't authenticated
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserEntity user;
+        try {
+           user = objectMapper.readValue(request.getInputStream(), UserEntity.class);
+        }catch (IOException exception){
+            throw new AuthenticationCredentialsNotFoundException(exception.getMessage());
+        }
         //2. use authmanager to authenticate the user whose
         // auth credentials are now contained in the auth obj
         UsernamePasswordAuthenticationToken authenticationToken=
-                new UsernamePasswordAuthenticationToken(email,password);
+                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
         //3. get back the auth obj
         Authentication authenticatedToken =customAuthenticationManger.authenticate(authenticationToken);
         //4. store auth in security context

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UserRepository extends MongoRepository<UserEntity, String> {
- UserEntity findFirstByEmail(String email);
+ UserEntity findByEmail(String email);
  UserEntity findFirstById(String id);
 
 
