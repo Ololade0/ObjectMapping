@@ -4,28 +4,35 @@ import com.relationships.relationships.dao.response.UserLoginResponse;
 import com.relationships.relationships.dto.UserDto;
 import com.relationships.relationships.model.AddressEntity;
 import com.relationships.relationships.model.Role;
+import com.relationships.relationships.model.RoleType;
 import com.relationships.relationships.model.UserEntity;
 import com.relationships.relationships.repository.UserRepository;
 import com.relationships.relationships.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final AddressService addressService;
-    private final PasswordEncoder passwordEncoder;
-
-
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Utils utils;
 
 
@@ -51,9 +58,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         String publicUserId = utils.generateUserId(30);
         userEntity.setUserId(publicUserId);
-        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userEntity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userEntity.setAddresses(addressEntity);
-        userEntity.setRole(Role.USER);
+        userEntity.getRoles().add(new Role(RoleType.USER));
         UserEntity returnValue = userRepository.save(userEntity);
         return modelMapper.map(returnValue, UserDto.class);
 
@@ -95,5 +102,17 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = userRepository.findUserByEmail(username).orElse(null);
+        if (user != null){
+            return new User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoles()));
+        }
+        throw new UsernameNotFoundException("User with email "+ username +" does not exist");
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleType().name())).collect(Collectors.toSet());
+    }
 }
 

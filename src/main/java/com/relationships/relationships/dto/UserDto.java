@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @ToString
 public class UserDto implements Serializable {
-    private static final long serialVersionUid = 1L;
+//    private static final long serialVersionUid = 1L;
     private String id;
     private String userId;
     @NotNull(message = "firstname cannot be null")
@@ -30,8 +30,8 @@ public class UserDto implements Serializable {
     @NotNull(message = "password cannot be null")
     private  String password;
 
-    private  String emailVerification;
-    private  Boolean emailVerificationStatus = false;
+//    private  String emailVerification;
+//    private  Boolean emailVerificationStatus = false;
     private List<AddressDto>  addresses;
 ;
 

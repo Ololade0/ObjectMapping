@@ -19,7 +19,6 @@ import java.io.Serializable;
 public class AddressEntity implements Serializable
 {
     @Id
-//    @Generated(value = "1")
     private String id;
     private String addressId;
     private String city;
@@ -27,7 +26,7 @@ public class AddressEntity implements Serializable
     private String streetName;
     private String postalCode;
     private String type;
-//    private UserEntity userDetails;
+
     @DBRef
     private UserEntity userDetails;
 }

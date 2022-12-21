@@ -1,12 +1,7 @@
 package com.relationships.relationships.service;
 
-import com.relationships.relationships.dto.AddressDto;
-import com.relationships.relationships.dto.UserDto;
 import com.relationships.relationships.model.AddressEntity;
-import com.relationships.relationships.model.Role;
-import com.relationships.relationships.model.UserEntity;
 import com.relationships.relationships.repository.AddressRepository;
-import com.relationships.relationships.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

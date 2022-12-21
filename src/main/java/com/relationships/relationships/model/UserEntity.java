@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -25,5 +27,16 @@ public class UserEntity {
     private boolean isEnabled;
     @DBRef
     List<AddressEntity> addresses = new ArrayList<>();
-    private Role role;
+    private Set<Role> roles = new HashSet<>();
+
+    public UserEntity(String firstName, String lastName, String email, String password, RoleType roleType) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        if (roles == null) {
+            roles = new HashSet<>();
+            roles.add(new Role(roleType));
+        }
+    }
 }

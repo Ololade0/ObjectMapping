@@ -8,9 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Role {
-    private RoleType roleType;
-    public Role(RoleType roleType){
-        this.roleType = roleType;
-    }
+@AllArgsConstructor
+public class AuthToken {
+    private String token;
+    private String id;
 }
