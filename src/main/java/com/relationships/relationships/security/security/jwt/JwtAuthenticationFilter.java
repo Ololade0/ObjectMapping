@@ -1,6 +1,7 @@
 package com.relationships.relationships.security.security.jwt;
 
 import com.relationships.relationships.exception.UserCannotBeFoundExcepttion;
+import com.relationships.relationships.service.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
@@ -54,6 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
+
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (userDetails == null){
                     throw new UserCannotBeFoundExcepttion("User not found", 403);
