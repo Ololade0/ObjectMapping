@@ -1,9 +1,12 @@
 package com.relationships.relationships.service;
 
-import com.relationships.relationships.model.EmailDetails;
+
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.relationships.relationships.dao.request.MailRequest;
+import com.relationships.relationships.dao.response.MailResponse;
+
+import java.util.concurrent.CompletableFuture;
 
 public interface EmailService {
-    String sendSimpleMail(EmailDetails details);
-
-    String sendMailWithAttachment(EmailDetails details);
+    CompletableFuture<MailResponse> sendSimpleMail(MailRequest mailRequest) throws UnirestException;
 }

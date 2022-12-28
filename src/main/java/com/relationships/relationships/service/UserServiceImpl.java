@@ -1,4 +1,6 @@
 package com.relationships.relationships.service;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.relationships.relationships.dao.request.MailRequest;
 import com.relationships.relationships.dao.request.UserLoginRequestModel;
 import com.relationships.relationships.dao.response.UserLoginResponse;
 import com.relationships.relationships.dto.UserDto;
@@ -34,11 +36,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final AddressService addressService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Utils utils;
+    private final EmailService emailService;
 
 
 
     @Override
-    public UserDto createUser(UserDto user) {
+    public UserDto createUser(UserDto user) throws UnirestException {
         List<AddressEntity> addressEntity = new ArrayList<>();
         for (int i = 0; i < user.getAddresses().size(); i++) {
             AddressEntity address = new AddressEntity();
@@ -62,14 +65,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userEntity.setAddresses(addressEntity);
         userEntity.getRoles().add(new Role(RoleType.USER));
         UserEntity returnValue = userRepository.save(userEntity);
+        sendMail(user);
         return modelMapper.map(returnValue, UserDto.class);
 
 
     }
 
+    private void sendMail(UserDto userDto) throws UnirestException {
+        MailRequest mailRequest = MailRequest.builder()
+                .sender(System.getenv("SENDER"))
+                .receiver(userDto.getEmail())
+                .subject("You are welcome")
+                .body("Hello " + userDto.getFirstName() + ". We are glad to let you know you have successfully registered")
+                .build();
+        emailService.sendSimpleMail(mailRequest);
+
+    }
+
     @Override
     public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findFirstByEmail(email);
     }
 
     @Override
