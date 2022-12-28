@@ -5,11 +5,14 @@ import com.relationships.relationships.dao.request.UserLoginRequestModel;
 import com.relationships.relationships.dto.UserDto;
 import com.relationships.relationships.exception.UserCannotBeFoundExcepttion;
 import com.relationships.relationships.model.AuthToken;
+import com.relationships.relationships.model.EmailDetails;
 import com.relationships.relationships.model.UserEntity;
 import com.relationships.relationships.security.security.jwt.TokenProvider;
+import com.relationships.relationships.service.EmailService;
 import com.relationships.relationships.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +31,8 @@ public class AuthController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@NonNull @RequestBody UserDto userDto) throws UnirestException {
@@ -41,10 +46,19 @@ public class AuthController {
                         loginRequest.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println("3");
-        final String token = tokenProvider.generateJWTToken(authentication);
+              final String token = tokenProvider.generateJWTToken(authentication);
         UserEntity user = userService.findByEmail(loginRequest.getEmail());
         return new ResponseEntity<>(new AuthToken(token, user.getId()), HttpStatus.OK);
+    }
+    @PostMapping("/sendMail")
+    public String sendMail(@RequestBody EmailDetails details){
+        String status = emailService.sendSimpleMail(details);
+        return status;
+    }
+    @PostMapping("/sendMailWithAttachment")
+    public String sendMailWithAttachment(@RequestBody EmailDetails details){
+        String status = emailService.sendMailWithAttachment(details);
+        return status;
     }
 
 

@@ -65,7 +65,7 @@ class UserDetailsTest {
 
     }
     @Test
-    public void UserCanLOgin() {
+    public void UserCanLogin() {
         UserLoginRequestModel userLoginRequestModel = new UserLoginRequestModel();
         userLoginRequestModel.setPassword(userDto.getPassword());
         userLoginRequestModel.setEmail(userDto.getEmail());

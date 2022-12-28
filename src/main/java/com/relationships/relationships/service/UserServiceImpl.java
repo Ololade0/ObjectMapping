@@ -85,7 +85,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserLoginResponse login(UserLoginRequestModel userLoginRequestModel) {
-        var user = userRepository.findByEmail(userLoginRequestModel.getEmail());
+        var user = userRepository.findFirstByEmail(userLoginRequestModel.getEmail());
+//        var user = userRepository.findByEmail(userLoginRequestModel.getEmail());
         if(user != null && user.getPassword().equals(userLoginRequestModel.getPassword()));
         return buildSuccessfulLoginResponse(user);
 
