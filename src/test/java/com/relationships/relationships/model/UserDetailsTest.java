@@ -4,6 +4,7 @@ import com.relationships.relationships.dao.request.UserLoginRequestModel;
 import com.relationships.relationships.dto.AddressDto;
 import com.relationships.relationships.dto.UserDto;
 import com.relationships.relationships.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,29 +28,34 @@ class UserDetailsTest {
         List<AddressDto> addresses = new ArrayList<>();
         userDetailsRequestModel.setFirstName("Ololade");
         userDetailsRequestModel.setLastName("Oluwatosin");
-        userDetailsRequestModel.setEmail("adesuyiololade@gmail.com");
+        userDetailsRequestModel.setEmail("desuyi@gmail.com");
         userDetailsRequestModel.setPassword("12345");
         userDetailsRequestModel.setAddresses(addresses);
          userDto = userService.createUser(userDetailsRequestModel);
     }
+
+    @AfterEach
+    void tearDown() {
+        userService.deleteAll();
+    }
+
     @Test
     public void userCanBeCreated() {
         List<AddressDto> addresses = List.of();
         UserDto userDetailsRequestModel = new UserDto();
         userDetailsRequestModel.setFirstName("Ololade");
         userDetailsRequestModel.setLastName("Oluwatosin");
-        userDetailsRequestModel.setEmail("adesuyiololade@gmail.com");
+        userDetailsRequestModel.setEmail("desuyi@gmail.com");
         userDetailsRequestModel.setPassword("12345");
        userDetailsRequestModel.setAddresses(addresses);
-        System.out.println(userService.createUser(userDetailsRequestModel));
         UserDto userDto = userService.createUser(userDetailsRequestModel);
-        assertEquals("adesuyiololade@gmail.com", userDto.getEmail());
+        assertEquals("desuyi@gmail.com", userDto.getEmail());
     }
 
     @Test
     public void findUserByEmail() {
       UserEntity user =   userService.findByEmail(userDto.getEmail());
-        assertEquals("adesuyiololade@gmail.com", user.getEmail());
+        assertEquals("desuyi@gmail.com", user.getEmail());
     }
 
     @Test

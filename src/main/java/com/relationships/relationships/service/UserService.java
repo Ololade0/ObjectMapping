@@ -14,4 +14,6 @@ public interface UserService{
     UserEntity findById(String id);
 
     UserLoginResponse login(UserLoginRequestModel userLoginRequestModel);
+
+    void deleteAll();
 }

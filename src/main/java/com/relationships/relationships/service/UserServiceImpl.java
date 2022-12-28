@@ -92,6 +92,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     }
 
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
+
+    }
+
     private UserLoginResponse buildSuccessfulLoginResponse(UserEntity user) {
         return UserLoginResponse.builder()
                 .code(200)
