@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Role {
     private RoleType roleType;
     public Role(RoleType roleType){
+
         this.roleType = roleType;
     }
 }
