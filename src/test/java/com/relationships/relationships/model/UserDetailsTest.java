@@ -1,5 +1,6 @@
 package com.relationships.relationships.model;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.relationships.relationships.dao.request.UserLoginRequestModel;
 import com.relationships.relationships.dto.AddressDto;
 import com.relationships.relationships.dto.UserDto;
@@ -23,7 +24,7 @@ class UserDetailsTest {
     private UserDto userDto;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws UnirestException {
         UserDto userDetailsRequestModel = new UserDto();
         List<AddressDto> addresses = new ArrayList<>();
         userDetailsRequestModel.setFirstName("Ololade");
@@ -40,7 +41,7 @@ class UserDetailsTest {
     }
 
     @Test
-    public void userCanBeCreated() {
+    public void userCanBeCreated() throws UnirestException {
         List<AddressDto> addresses = List.of();
         UserDto userDetailsRequestModel = new UserDto();
         userDetailsRequestModel.setFirstName("Ololade");
