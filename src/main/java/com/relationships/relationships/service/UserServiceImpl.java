@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userEntity.setAddresses(addressEntity);
         userEntity.getRoles().add(new Role(RoleType.USER));
         UserEntity returnValue = userRepository.save(userEntity);
-        sendMail(user);
+//        sendMail(user);
         return modelMapper.map(returnValue, UserDto.class);
 
 
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserEntity findByEmail(String email) {
-        return userRepository.findFirstByEmail(email);
+        return userRepository.findUserEntityByEmail(email);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserLoginResponse buildSuccessfulLoginResponse(UserEntity user) {
         return UserLoginResponse.builder()
-                .code(200)
+//                .code(200)
                 .message("Login successful")
                 .build();
 

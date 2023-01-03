@@ -21,14 +21,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private UserRepository userRepository;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  private BCryptPasswordEncoder passwordEncoder;
 
 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (userRepository.findUserByEmail("adminuser@gmail.com").isEmpty()){
-            UserEntity user = new UserEntity("Admin", "User","adminuser@gmail.com", passwordEncoder.encode("password1234#"), RoleType.ADMIN);
+        if (userRepository.findUserByEmail("adesuuse@rgmail.com").isEmpty()){
+            UserEntity user = new UserEntity("Admin", "User","adesuuser@gmail.com", passwordEncoder.encode("password1234#"), RoleType.ADMIN);
             userRepository.save(user);
         }
     }
