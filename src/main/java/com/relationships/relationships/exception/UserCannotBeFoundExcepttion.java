@@ -1,5 +1,4 @@
 package com.relationships.relationships.exception;
-
 import lombok.Getter;
 import lombok.Setter;
 

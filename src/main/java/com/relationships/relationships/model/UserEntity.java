@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,11 @@ public class UserEntity {
     @Id
     private String id;
     private String userId;
+    @Pattern(regexp = "^[a-zA-Z0-9]{1,12}$",
+            message = "firstName must be of 1 to 12 length with no special characters")
     private String firstName;
+    @Pattern(regexp = "^[a-zA-Z0-9]{1,12}$",
+            message = "lastName must be of 1 to 12 length with no special characters")
     private String lastName;
     private String email;
     private String password;
